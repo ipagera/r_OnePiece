@@ -1,0 +1,14 @@
+
+Project Map
+-----------------
+
+Done:
+
+* Git repository initialized on GitHub
+
+
+TODO:
+
+* Virtual Environment
+* Check Out Reddit API
+* Check Out How to work with JSON
