@@ -1,6 +1,9 @@
-import praw
 import json
 import time
+
+import praw
+
+import reddit_post
 
 # We set up our configuration for Reddit
 
@@ -16,61 +19,35 @@ reddit_config = praw.Reddit(
 
 subreddit = reddit_config.subreddit("onepiece")
 
- 
-def search_subreddit(query, sort= 'relevance', limit= 5, time_filter= 'month',subreddit=subreddit):
+
+def generate_search(
+    query, sort="relevance", limit=5, time_filter="month", subreddit=subreddit
+):
     """ Takes a subreddit object and generates a search based on the
-    arguments one has provided to the function (e.g. query itself, sort and etc.). """
+    arguments one has provided to the function (e.g. query itself, sort and etc.). Returns
+    a list of searches."""
 
     search = subreddit.search(query, sort, limit, time_filter)
 
-
-    # for i in search:
-    #     print(i._fetch_info())
-    #     # if i == "bxdj12":
-    #     # print("ID: ", i.id)
-    #     # print("Submission: ", i)
-    #     # print("User: ", i.author)
-    #     # print("Posted: ", i.author)
-    #     # print("Subreddit: ", i.subreddit)
-    #     # print("Title: ", i.title)
-    
-
+    searches = []
     for i in search:
-        print(i.title)
-        created_time = int(i.created)
 
-    created_time = time.strftime('%Y-%m-%d@%H:%M:%S', time.localtime(created_time))
-    print(created_time)
-        
+        created_on = int(i.created)
 
-    # Unix time epoch conversion function for i.created field
-    
-    
-        
+        # Unix time epoch conversion function for i.created field
 
-search_subreddit('one piece chapter 947 spoilers')
+        created_on = time.strftime("%Y-%m-%d@%H:%M:%S", time.localtime(created_on))
 
+        reddit_post_object = reddit_post.RedditPost(
+            i.id, i.author, created_on, i.title, i.selftext
+        )
 
-class RedditPost:
-    """ Creates a reddit post object with the attributes:
-    - Submission id
-    - User
-    - Date / timestamp
-    - Sub-Reddit
-    - Title
-    - Body """
-    pass
+        searches.append(reddit_post_object)
+
+    return searches
 
 
-# @staticmethod
-# def search_subreddit(query):
-#     """ Takes query (SearchQuery object) and performs a search of a subreddit
-#     and puts the results into objects.
-#     Find a way to use the hot() and other filters? Maybe in the SearchQuery object? """
-#     pass
-
-# @staticmethod
-# def check_with_db():
-#     """ Checks post with JSON / Google Sheet DB """
-#     pass
+searches = generate_search("one piece chapter 947 spoilers")
+for i in searches:
+    print(i.title, i.created_on)
 
