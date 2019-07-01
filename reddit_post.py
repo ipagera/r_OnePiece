@@ -11,6 +11,9 @@ class RedditPost:
         self.title = title
         self.body = body
 
+    def __repr__(self):
+        return "{} by {} on {}".format(self.title, self.user, self.created_on)
+
     
 
 

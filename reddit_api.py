@@ -48,6 +48,5 @@ def generate_search(
 
 
 searches = generate_search("one piece chapter 947 spoilers")
-for i in searches:
-    print(i.title, i.created_on)
+print(searches)
 
