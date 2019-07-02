@@ -13,15 +13,10 @@ subreddit = reddit.subreddit("onepiece")
 hot_python = subreddit.hot(limit=1)
 
 query = subreddit.search(
-    "One Piece Chapter 946 Spoilers", sort="relevance", limit=5, time_filter="month"
+    "One Piece Chapter 949 Spoilers", sort="relevance", limit=5, time_filter="month"
 )
 
 
 for i in query:
-    # print(dir(i))
-    # if i == "bxdj12":
-    print("Title: ", i.title)
-    print("Subreddit: ", i.subreddit)
-    print("Submission: ", i)
-    # print('Body: ', i.selftext)
+    print(i in query == True)
 

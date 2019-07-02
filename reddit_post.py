@@ -1,3 +1,5 @@
+import json
+
 
 class RedditPost:
     """ Reddit Post Object """
@@ -14,9 +16,22 @@ class RedditPost:
     def __repr__(self):
         return "{} by {} on {}".format(self.title, self.user, self.created_on)
 
-    
+    @staticmethod
+    def toJSON(*args):
+        """ Parses one or several RedditPost objects
+         onto a JSON style data structure dict. """
 
+        posts_json = {}
+        for arg in args:
+            posts_json[arg.id] = {
+                "id": arg.id,
+                "user": arg.user,
+                "created_on": arg.created_on,
+                "title": arg.title,
+                "body": "arg.body",
+            }
 
+        return posts_json
 
 
 # @staticmethod

@@ -1,14 +1,9 @@
 
-Project Map
------------------
+Project Map and Logic
+----------------------
 
-Done:
-
-* Git repository initialized on GitHub
-
-
-TODO:
-
-* Virtual Environment
-* Check Out Reddit API
-* Check Out How to work with JSON
+1. Reddit Instance
+2. Subreddit Instance
+3. Search Var for search() method of Subreddit Class on Subreddit instance
+4. Function that gets the details of a post:
+	-
