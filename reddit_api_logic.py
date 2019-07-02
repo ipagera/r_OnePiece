@@ -66,8 +66,41 @@ def generate_search(
 
 results = generate_search("one piece chapter 945 spoilers")
 
+results = reddit_post.RedditPost.clear_resutls(*results)
+
+
 data = reddit_post.RedditPost.toJSON(*results)
 
-data = json.dumps(data, indent=2,)
 
-print(data)
+
+
+def crud_json_db(dict):
+    """ Opens our RedditPosts JSON database and checks if
+    the result(s) we have are there, if not it adds them. """
+
+    with open('posts_db.json','r') as f:
+        new_data = json.load(f)
+
+    for key in data.keys():
+        if key in new_data.keys():
+            print('Already in database!')
+            break 
+        else:
+            new_data[key] = data[key]
+            with open('posts_db.json','w') as f:
+                json.dump(new_data,f)
+            print('New entry added to database!')
+
+# crud_json_db(data)
+    
+with open('posts_db.json','r') as f:
+    new_data = json.load(f)
+
+print(new_data)
+
+
+
+# The logic of the json_posts_db should be that it opens, reads, adds the new file to the info and rewrites
+# maybe create a new module? 
+
+

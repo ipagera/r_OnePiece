@@ -1,4 +1,6 @@
 import praw
+import reddit_post
+
 
 reddit = praw.Reddit(
     client_id="TIxlhxgTa1KR7A",
@@ -17,6 +19,5 @@ query = subreddit.search(
 )
 
 
-for i in query:
-    print(i in query == True)
+
 
