@@ -21,16 +21,17 @@ class RedditPost:
         """ To analyze the body of the post and determine if it should join
         the json database.
          """
-        validation_list = ['spoiler','SPOILER','Spoiler']
+        validation_list = ["spoiler", "SPOILER", "Spoiler"]
 
         updated_results = []
         for item in validation_list:
             for arg in args:
                 if item in arg.title:
                     updated_results.append(arg)
-        
+
+        if len(updated_results) == 0:
+            print("No matching results")
         return updated_results
-    
 
     @staticmethod
     def toJSON(*args):
@@ -39,24 +40,9 @@ class RedditPost:
 
         json_dict = {}
         for arg in args:
-            new_item = json.dumps(arg.__dict__) 
+            arg.__dict__["body"] = "body"  # TODO - Remove line for live version
+            new_item = arg.__dict__
             json_dict[arg.id] = new_item
-        
+
         return json_dict
-
-    
-
-
-
-# @staticmethod
-# def search_subreddit(query):
-#     """ Takes query (SearchQuery object) and performs a search of a subreddit
-#     and puts the results into objects.
-#     Find a way to use the hot() and other filters? Maybe in the SearchQuery object? """
-#     pass
-
-# @staticmethod
-# def check_with_db():
-#     """ Checks post with JSON / Google Sheet DB """
-#     pass
 

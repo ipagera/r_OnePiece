@@ -8,7 +8,7 @@ import time
 
 import praw
 
-import reddit_post
+from . import reddit_post
 
 # We set up our configuration for our Reddit instance and Sub reddit instance
 
@@ -59,48 +59,4 @@ def generate_search(
         results.append(reddit_post_object)
 
     return results
-
-    # TODO Have a check if the list searches is empty. If it is empty do not build a conditional
-    # that does not append the result of the list (which)
-
-
-results = generate_search("one piece chapter 945 spoilers")
-
-results = reddit_post.RedditPost.clear_resutls(*results)
-
-
-data = reddit_post.RedditPost.toJSON(*results)
-
-
-
-
-def crud_json_db(dict):
-    """ Opens our RedditPosts JSON database and checks if
-    the result(s) we have are there, if not it adds them. """
-
-    with open('posts_db.json','r') as f:
-        new_data = json.load(f)
-
-    for key in data.keys():
-        if key in new_data.keys():
-            print('Already in database!')
-            break 
-        else:
-            new_data[key] = data[key]
-            with open('posts_db.json','w') as f:
-                json.dump(new_data,f)
-            print('New entry added to database!')
-
-# crud_json_db(data)
-    
-with open('posts_db.json','r') as f:
-    new_data = json.load(f)
-
-print(new_data)
-
-
-
-# The logic of the json_posts_db should be that it opens, reads, adds the new file to the info and rewrites
-# maybe create a new module? 
-
 
