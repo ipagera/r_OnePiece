@@ -1,3 +1,7 @@
+""" Module holds the class RedditPost which in conjunction with
+module reddit_api_logic is used to initialize results the subreddit search into
+objects which we later analyze and put in JSON data structure.  """
+
 import json
 
 
@@ -17,7 +21,7 @@ class RedditPost:
         return "{} by {} on {}".format(self.title, self.user, self.created_on)
 
     @staticmethod
-    def clear_resutls(*args):
+    def clear_results(*args):
         """ To analyze the body of the post and determine if it should join
         the json database.
          """
