@@ -11,9 +11,15 @@ msg['From'] = EMAIL_ADDRESS
 msg['To'] = EMAIL_ADDRESS
 msg.set_content('Testing stuff')
 
-msg.add_alternative("""\ 
-    
-    """, subtype='html')
+
+
+msg.add_alternative("""\
+<!DOCTYPE html>
+<html>
+    <body>
+        <p><b> This is an HTML email test.</p>
+    </body>
+</html> """, subtype='html')
 
 # Configuration of the SMTP server
 with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
