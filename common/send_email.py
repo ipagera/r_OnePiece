@@ -1,22 +1,27 @@
-import smtplib, ssl
 
-port = 587  # For starttls
-smtp_server = "smtp.gmail.com"
-sender_email = "yvann.jeronimo12@gmail.com"
-receiver_email = "yvann.jeronimo12@gmail.com"
-password = "Yrdenciri12"
-message = """\
-Subject: Hi there
+import smtplib
+from email.message import EmailMessage
 
-This message is sent from Python."""
+EMAIL_ADDRESS = "yvann.jeronimo12@gmail.com"
+EMAIL_PASSWORD = "Yrdenciri123"
 
+msg = EmailMessage()
+msg['Subject'] = 'Test #3'
+msg['From'] = EMAIL_ADDRESS
+msg['To'] = EMAIL_ADDRESS
+msg.set_content('Testing stuff')
 
+msg.add_alternative("""\ 
+    
+    """, subtype='html')
 
+# Configuration of the SMTP server
+with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+    smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
 
-context = ssl.create_default_context()
-with smtplib.SMTP(smtp_server, port) as server:
-    server.ehlo()  # Can be omitted
-    server.starttls(context=context)
-    server.ehlo()  # Can be omitted
-    server.login(sender_email, password)
-    server.sendmail(sender_email, receiver_email, message)
+    smtp.send_message(msg)
+
+# with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
+#     smtp.ehlo()
+#     smtp.starttls()
+#     smtp.ehlo()
