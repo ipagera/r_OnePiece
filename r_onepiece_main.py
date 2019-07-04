@@ -22,14 +22,18 @@ def main():
 
     # The results are put in a new JSON format (i.e. dict)
 
-    data = reddit_post.RedditPost.toJSON(*results)
+    print(type(results))
 
-    # We import the database of choice
+    # data = reddit_post.RedditPost.toJSON(*results)
 
-    json_db = db_operators.JsonDb(".\common\posts_db.json")
+    # # We import the database of choice
 
-    json_db.add_results(data)
+    # json_db = db_operators.JsonDb(".\common\posts_db.json")
+    
+    # json_db.add_results(data)
 
-    # print(json_db.data)
+    
+    
+    
     
 main()

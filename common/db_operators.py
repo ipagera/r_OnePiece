@@ -26,15 +26,24 @@ class JsonDb:
         # check if a post from results is in the DB based on ID
         # ID = key
 
+        json_data = self.data
+
         for key in results.keys():
-            if key in self.data.keys():
+            if key in json_data.keys():
                 print("Results already in DB!".format(key))
+                JsonDb.new_entry()
             else:
-                self.data[key] = results[key]
 
-        # We overwrite the json db with the new data appended to the old
+                json_data[key] = results[key]
 
-                with open("posts_db.json", "w") as f:
-                    json.dump(self.data, f)
-                print("New entry added to database!")
+                # We overwrite the json db with the new data appended to the old
+
+                with open(self.file_name, "w") as f:
+                    json.dump(json_data, f)
+
+    @staticmethod
+    def new_entry():
+        """ Each time there is a new entry in the Json DB,
+        this method is called which calls the email constructor. """
+        print("Send email!")
 

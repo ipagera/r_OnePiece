@@ -2,7 +2,8 @@
 import smtplib
 from email.message import EmailMessage
 
-EMAIL_ADDRESS = "yvann.jeronimo12@gmail.com"
+
+EMAIL_ADDRESS = "yvann.jeral12@outlook.com"
 EMAIL_PASSWORD = "Yrdenciri123"
 
 msg = EmailMessage()
@@ -12,17 +13,19 @@ msg['To'] = EMAIL_ADDRESS
 msg.set_content('Testing stuff')
 
 
+def message_constructor(results_in_email):
+    msg.add_alternative(results_in_email, subtype='html')
+    return msg
 
-msg.add_alternative("""\
-<!DOCTYPE html>
-<html>
-    <body>
-        <p><b> This is an HTML email test.</p>
-    </body>
-</html> """, subtype='html')
+# TODO Fix message constructor function, reddit_post email, figure out the logic and import into main module
 
 # Configuration of the SMTP server
-with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+with smtplib.SMTP('smtp.office365.com', 587) as smtp:
+    smtp.ehlo()
+    smtp.starttls()
+    smtp.ehlo()
+
+
     smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
 
     smtp.send_message(msg)
@@ -31,3 +34,4 @@ with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
 #     smtp.ehlo()
 #     smtp.starttls()
 #     smtp.ehlo()
+

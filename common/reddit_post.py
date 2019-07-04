@@ -50,3 +50,25 @@ class RedditPost:
 
         return json_dict
 
+    @staticmethod
+    def results_in_email(updated_results):
+        for result in updated_results:
+            body_of_email += f""" 
+        
+        <p>id: {result.id}</p>
+        <p>user: {result.user}</p>
+        <p>created on: {result.created_on}</p><br>
+        <p><b>{result.title}</b></p>
+        <p>{result.body}</p><br> """
+
+        email_frame = f""" 
+        <!DOCTYPE html>
+        <html>
+            <body>
+                <p><b>Results from the Reddit Search</b></p><br>
+                {body_of_email}
+            </body>
+        </html> """
+
+        return email_frame
+
