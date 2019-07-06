@@ -1,4 +1,16 @@
 
+06 July 2019
+
+Operational basic functions. Loads results based on query from Reddit and checks in DB before storing and sending an email. 
+If in DB, if the match is below 100% - Sends email. 
+
+#TODO:
+
+* Documentation
+* Automation of query changing - ?? ??????? ??? ??????????? ?? ???????? query-?? - ?? 947 ?? 948 manga chapter..
+
+
+
 Project Map and Logic
 ----------------------
 
