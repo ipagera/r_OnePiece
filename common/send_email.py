@@ -1,37 +1,27 @@
-
 import smtplib
 from email.message import EmailMessage
+from . import reddit_post
 
 
-EMAIL_ADDRESS = "yvann.jeral12@outlook.com"
-EMAIL_PASSWORD = "Yrdenciri123"
+def send_email(email):
 
-msg = EmailMessage()
-msg['Subject'] = 'Test #3'
-msg['From'] = EMAIL_ADDRESS
-msg['To'] = EMAIL_ADDRESS
-msg.set_content('Testing stuff')
+    EMAIL_ADDRESS = "yvann.jeral12@outlook.com"
+    EMAIL_PASSWORD = "Yrdenciri123"
 
+    msg = EmailMessage()
+    msg["Subject"] = "r_OnePiece_Project"
+    msg["From"] = EMAIL_ADDRESS
+    msg["To"] = EMAIL_ADDRESS
+    msg.set_content("Testing stuff")
 
-def message_constructor(results_in_email):
-    msg.add_alternative(results_in_email, subtype='html')
-    return msg
+    msg.add_alternative(email, subtype="html")
 
-# TODO Fix message constructor function, reddit_post email, figure out the logic and import into main module
+    with smtplib.SMTP("smtp.office365.com", 587) as smtp:
+        smtp.ehlo()
+        smtp.starttls()
+        smtp.ehlo()
 
-# Configuration of the SMTP server
-with smtplib.SMTP('smtp.office365.com', 587) as smtp:
-    smtp.ehlo()
-    smtp.starttls()
-    smtp.ehlo()
+        smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
 
-
-    smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
-
-    smtp.send_message(msg)
-
-# with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
-#     smtp.ehlo()
-#     smtp.starttls()
-#     smtp.ehlo()
+        smtp.send_message(msg)
 

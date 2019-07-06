@@ -1,5 +1,8 @@
 from common import *
 
+
+
+
 # TODO Add more extensive documentation with the steps and logic
 
 
@@ -19,21 +22,17 @@ def main():
     # by calling the RedditPost.clear_results() method
 
     results = reddit_post.RedditPost.clear_results(*results)
+    results = reddit_post.RedditPost.toJSON(*results)
 
-    # The results are put in a new JSON format (i.e. dict)
+    print(results)
+    json_db = db_operators.JsonDb("common/posts_db.json")
 
-    print(type(results))
+    json_db.add_results(results)
 
-    # data = reddit_post.RedditPost.toJSON(*results)
-
-    # # We import the database of choice
-
-    # json_db = db_operators.JsonDb(".\common\posts_db.json")
-    
-    # json_db.add_results(data)
-
-    
-    
-    
-    
 main()
+    
+
+
+    
+    
+    
