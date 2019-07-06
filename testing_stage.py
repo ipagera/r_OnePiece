@@ -1,7 +1,8 @@
+import json
 
-from common import *
+with open("common/posts_db.json",'r') as f:
+    data =json.load(f)
 
-json_db = db_operators.JsonDb("common/posts_db.json")
+    data['varna'] = 'varna'
 
-for value in json_db.data.values():
-    print(value['body'])
+    print(data['varna'])

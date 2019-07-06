@@ -47,6 +47,7 @@ class RedditPost:
             # arg.__dict__["body"] = "body"  # TODO - Remove line for live version
             new_item = arg.__dict__
             new_item['body'] = re.sub("\n",'<br>',new_item['body'])
+           
             json_dict[arg.id] = new_item
 
         return json_dict

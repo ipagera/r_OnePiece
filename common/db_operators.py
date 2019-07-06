@@ -5,6 +5,7 @@ Google Sheets. """
 import json
 from . import send_email
 import re
+from fuzzywuzzy import fuzz
 
 
 class JsonDb:
@@ -29,50 +30,43 @@ class JsonDb:
         # ID = key
 
         json_data = self.data
-        new_results = results
 
         for key in results.keys():
             if key in json_data.keys():
-                # if (
-                #     JsonDb.check_for_update() == True
-                # ):  # Cheks if there are any updates between the results and the database
-                #     JsonDb.new_entry(results)
-                # else:
-                print("Results already in DB!")
+                body1 = results[key]["body"]
+                body2 = json_data[key]["body"]
+                if (
+                    JsonDb.check_for_update(body1, body2) < 100
+                ):  # Cheks if there are any updates between the results and the database
+                    JsonDb.new_entry_added(self,results)
+                else:
+                    print("Results already in DB!")
 
             else:
-                json_data[key] = results[key]
+                JsonDb.new_entry_added(self,results)
 
-            # We overwrite the json db with the new data appended to the old
+    def new_entry_added(self, new_data):
+        
+        json_data = self.data
 
-                with open(self.file_name, "w") as f:
-                    json.dump(json_data, f)
-                    print("Added to DB!")
+        for key in new_data.keys():
+            json_data[key] = new_data[key]
+            
+        with open(self.file_name, "w") as f:
+            json.dump(json_data, f)
+            print("Added to DB!")
 
-                print("Email is being sent now!")
-                email_frame = Send_Emails.results_in_email(results)
-                Send_Emails.email_sender(email_frame)
-                
-
-    # def new_entry(self, results):
-    #     json_data = self.data
-
-    #     for key in results.keys():
-    #         json_data[key] = results[key]
-
-    #         # We overwrite the json db with the new data appended to the old
-
-    #         with open(self.file_name, "w") as f:
-    #             json.dump(json_data, f)
-    #             print("Added to DB!")
-
-    #     print("Email is being sent now!")
-    #     email_frame = Send_Emails.results_in_email(results)
-    #     Send_Emails.email_sender(email_frame)
+        print("Email is being sent now!")
+        email_frame = Send_Emails.results_in_email(new_data)
+        Send_Emails.email_sender(email_frame)
 
     @staticmethod
-    def check_for_update():
-        return False
+    def check_for_update(body1, body2):
+        """ Uses fuzzy matching to check the matching ratio the
+        body of new result vs body of result in database which matching
+        post id."""
+        ratio = fuzz.ratio(body1, body2)
+        return ratio
 
 
 class Send_Emails:
@@ -89,7 +83,7 @@ class Send_Emails:
         <strong>ID: </strong>{result['id']}<br>
         <strong>User: </strong>{result['user']}<br>
         <strong>Created on: </strong>{result['created_on']}<br>
-        <strong>{result['title']}</strong><br>
+        <strong>{result['title']}</strong><br><br>
         {result['body']}<br><br>"""
 
         email_frame = f""" 
@@ -101,7 +95,7 @@ class Send_Emails:
             </body>
         </html> """
 
-        print(email_frame)
+        # print(email_frame)
         return email_frame
 
     @staticmethod
