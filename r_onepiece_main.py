@@ -15,7 +15,7 @@ def main():
     # We generate the seach. Aguments are the "query" + subreddit, the latter already defined above
 
     results = reddit_api_logic.generate_search(
-        "one piece chapter 947 spoilers", subreddit=subreddit
+        "one piece chapter 947 spoilers"
     )
 
     # We analyze the result and strip the ones that we don't care about
