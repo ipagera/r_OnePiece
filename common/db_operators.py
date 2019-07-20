@@ -3,7 +3,7 @@ each reddit post. They can be either stored in a JSON or
 Google Sheets. """
 
 import json
-from . import send_email
+import send_email
 import re
 from fuzzywuzzy import fuzz
 
