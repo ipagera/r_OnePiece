@@ -81,7 +81,7 @@ class QueryDatabase(db_operators.JsonDb):
 
         return new_query
 
-    
+
 
         
         
@@ -97,7 +97,7 @@ test_query1 = Query('one piece chapter 948 spoilers')
 
 
 
-# print(query_db.latest_chapter)
-# print(query_db.new_query())
+print(QUERY_DB.latest_chapter)
+print(QUERY_DB.new_query())
 
 
