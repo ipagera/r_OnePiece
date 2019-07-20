@@ -42,10 +42,6 @@ class QueryDatabase(db_operators.JsonDb):
     def __init__(self, filename):
         super().__init__(filename)
         
-    @staticmethod
-    def new_query(query_text):
-        query = Query(query_text)
-        return query
 
     def add_entry(self, query):
         """ Adds a new query to the Query Database """
@@ -97,7 +93,7 @@ test_query1 = Query('one piece chapter 948 spoilers')
 
 
 
-print(QUERY_DB.latest_chapter)
-print(QUERY_DB.new_query())
+# print(QUERY_DB.latest_chapter)
+# print(QUERY_DB.new_query())
 
 
