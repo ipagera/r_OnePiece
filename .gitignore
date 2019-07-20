@@ -3,3 +3,4 @@ r_OnePiece_venv/
 .venv/
 _pycache_/
 *.pyc
+.env/
