@@ -73,3 +73,9 @@ class QueryDatabase(db_operators.JsonDb):
 
         return new_query
 
+    def old_query(self):
+        current_chapter_no = self.latest_chapter
+        current_query = f"one piece chapter {current_chapter_no} spoilers"
+
+        return current_query
+
