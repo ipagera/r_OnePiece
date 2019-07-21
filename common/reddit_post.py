@@ -35,7 +35,9 @@ class RedditPost:
 
         if len(updated_results) == 0:
             print("No matching results")
-        return updated_results
+            return False
+        else:
+            return updated_results
 
     @staticmethod
     def toJSON(*args):

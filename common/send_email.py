@@ -1,6 +1,6 @@
 import smtplib
 from email.message import EmailMessage
-import reddit_post
+from . import reddit_post
 
 
 def send_email(email):
