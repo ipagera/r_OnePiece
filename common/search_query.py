@@ -1,38 +1,20 @@
 import re
 import json
 from datetime import datetime
-from common import *
+from . import *
 
-
-json_db = db_operators.JsonDb("common/posts_db.json")
-
-posts_from_db = {}
-
-for key, value in json_db.data.items():
-    posts_from_db[key] = json_db.data[key]["created_on"]
-
-
-# print(posts_from_db)
-
-
-# TODO
-
-""" 
-1. New Database for search queries
-2. 
-"""
 
 class Query:
-
     def __init__(self, query_text):
         self.query_text = query_text
         self.creation_date = (datetime.now()).timestamp()
 
     @property
     def chapter_no(self):
-        chapter_no = re.findall('\d{2,}',self.query_text)
+        chapter_no = re.findall("\d{2,}", self.query_text)
         for result in chapter_no:
             return result
+
 
 class QueryDatabase(db_operators.JsonDb):
     """ Class that initializes search query database. It
@@ -41,12 +23,27 @@ class QueryDatabase(db_operators.JsonDb):
 
     def __init__(self, filename):
         super().__init__(filename)
-        
 
     def add_entry(self, query):
         """ Adds a new query to the Query Database """
-        with open("common/query_db.json",'w') as f:
-            pass
+
+        # We instatiate the new query as an object of class Query
+
+        new_query = Query(query)
+
+        # current_data = the data in the QueryDatabase we are working with at the moment
+
+        current_data = self.data
+
+        # We add the new entry to the current data dictionary.
+        # Key = creation_date (epoch time)
+        # Value = query text i.e. the query itself
+
+        current_data[new_query.creation_date] = new_query.query_text
+
+        with open(self.file_name, "w") as f:
+            json.dump(current_data, f)
+            print("Query was successful. Added to Query Database!")
 
     @property
     def latest_chapter(self):
@@ -56,13 +53,13 @@ class QueryDatabase(db_operators.JsonDb):
         # List of queries' creation dates for filtering purposes.
         # We need the most recent date.
 
-        creation_dates = [] 
+        creation_dates = []
         for key in self.data:
             creation_dates.append(key)
-        
+
         # Sorting the list
 
-        creation_dates.sort(reverse = True)
+        creation_dates.sort(reverse=True)
 
         # We initialize the latest query as a Query object
 
@@ -70,30 +67,9 @@ class QueryDatabase(db_operators.JsonDb):
 
         return int(latest_query.chapter_no)
 
-
     def new_query(self):
         new_chapter_no = self.latest_chapter + 1
         new_query = f"one piece chapter {new_chapter_no} spoilers"
 
         return new_query
-
-
-
-        
-        
-        
-
-QUERY_DB = QueryDatabase('common/query_db.json')
-
-
-
-test_query1 = Query('one piece chapter 948 spoilers')
-
-
-
-
-
-# print(QUERY_DB.latest_chapter)
-# print(QUERY_DB.new_query())
-
 
